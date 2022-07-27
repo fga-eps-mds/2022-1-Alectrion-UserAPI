@@ -1,6 +1,7 @@
 export interface UseCaseReponse {
     isSuccess:Boolean;
     data: any;
+    
 }
 
 export interface UseCase {

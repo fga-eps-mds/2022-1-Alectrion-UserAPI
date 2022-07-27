@@ -39,6 +39,5 @@ export class User {
 
     @Column({default: ()=> 'NOW()'})
     @UpdateDateColumn()
-    updatedAt: Timestamp
-
+    updatedAt: Date
 }

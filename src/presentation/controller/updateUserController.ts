@@ -1,11 +1,12 @@
 import { Controller, HttpResponse } from "../protocols/controller";
 import { UseCase, UseCaseReponse } from "../../useCase/protocols/useCase";
 import { Request, Response} from 'express'
+import UpdateUserUseCase from "../../useCase/updateUser/updateUserUseCase";
 
 class UpdateUserControler implements Controller{
     private useCase: UseCase;
-    constructor(useCase: UseCase){
-        this.useCase = useCase;
+    constructor(){
+        this.useCase = new UpdateUserUseCase();
     }
    async handle(req: Request, res: Response): Promise<any> {
         const user = req.body;
