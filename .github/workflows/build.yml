@@ -30,6 +30,7 @@ jobs:
   deploy:
     name: Image deploy
     runs-on: ubuntu-latest
+    environment: develop
     steps:
       - uses: actions/checkout@v2
       - name: Setup
