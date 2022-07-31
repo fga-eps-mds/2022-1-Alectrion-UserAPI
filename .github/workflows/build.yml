@@ -25,16 +25,16 @@ jobs:
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
-    steps: Build docker image
-      - name: print
+    steps:
+      - name: show TAG
         run: echo $IMAGE_TAG
       - name: Setup
         uses: docker/setup-buildx-action@v2
       - name: Docker login
         uses: docker/login-action@v2
-          with:
-            username: ${{ secrets.DOCKER_USER }}
-            password: ${{ secrets.DOCKER_TOKEN }}
+        with:
+          username: ${{ secrets.DOCKER_USER }}
+          password: ${{ secrets.DOCKER_TOKEN }}
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
