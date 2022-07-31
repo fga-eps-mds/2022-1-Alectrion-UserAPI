@@ -27,4 +27,3 @@ jobs:
     environment: develop
     steps:
       - uses: ./.github/workflows/action.yml
-        secrets: inherit
