@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: show TAG
-        run: echo $IMAGE_TAG
+        run: echo ${{secrets.IMAGE_TAG}}
       - name: Setup
         uses: docker/setup-buildx-action@v2
       - name: Docker login
@@ -40,4 +40,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: alectrion/repo:$IMAGE_TAG
+          tags: alectrion/repo:${{secrets.IMAGE_TAG}}
