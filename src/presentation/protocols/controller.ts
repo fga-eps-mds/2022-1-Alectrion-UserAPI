@@ -1,11 +1,10 @@
-import { Request, Response} from 'express'
+import { Request, Response } from 'express'
 
 export interface HttpResponse {
-    status: Number;
-    body: any;
+  status: Number
+  body: any
 }
 
-
 export interface Controller {
-    handle(req: Request, res: Response): Promise<any>
+  handle(req: Request, res: Response): Promise<any>
 }

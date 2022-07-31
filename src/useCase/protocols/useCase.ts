@@ -1,9 +1,8 @@
 export interface UseCaseReponse {
-    isSuccess:Boolean;
-    data: any;
-    
+  isSuccess: Boolean
+  data: any
 }
 
 export interface UseCase {
-    execute(data: any): Promise<UseCaseReponse>;
+  execute(data: any): Promise<UseCaseReponse>
 }

@@ -7,7 +7,7 @@ const port = 4001
 const app = express()
 
 app.use(json())
-app.use('/user', routes);
+app.use('/user', routes)
 
 // app.get('/', (req, res) => {
 //   res.json({ message: 'User api' })

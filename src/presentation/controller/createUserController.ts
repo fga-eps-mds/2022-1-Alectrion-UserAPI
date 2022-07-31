@@ -1,12 +1,13 @@
 import { Controller } from '../protocols/controller'
 import { UseCase } from '../../useCase/protocols/useCase'
 import { Request, Response } from 'express'
-import UpdateUserUseCase from '../../useCase/updateUser/updateUserUseCase'
+import CreateUserUseCase from '../../useCase/createUser/createUserUseCase'
+import { BcryptAdapter } from '../../adapters/bcryptAdapter'
 
-class UpdateUserControler implements Controller {
+class CreateUserController implements Controller {
   private useCase: UseCase
   constructor() {
-    this.useCase = new UpdateUserUseCase()
+    this.useCase = new CreateUserUseCase(new BcryptAdapter())
   }
 
   async handle(req: Request, res: Response): Promise<any> {
@@ -19,4 +20,4 @@ class UpdateUserControler implements Controller {
   }
 }
 
-export default new UpdateUserControler()
+export default new CreateUserController()
