@@ -26,5 +26,5 @@ jobs:
     name: Deploy
     environment: develop
     steps:
-      uses: ./.github/workflows/action.yml
-      secrets: inherit
+      - uses: ./.github/workflows/action.yml
+        secrets: inherit
