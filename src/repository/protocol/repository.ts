@@ -5,7 +5,7 @@ export interface Repository {
     name: string
     email: string
     username: string
-    jobFunction: Job
+    job: Job
     password: string
   }): Promise<User | undefined>
   updateOne(userData: any): Promise<Boolean>

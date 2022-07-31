@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "typeorm": "ts-node-dev node_modules/.bin/typeorm",
+    "migration:generate": "npm run typeorm -- migration:generate src/db/migrations/default -d src/db/config.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/db/config.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/db/config.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",

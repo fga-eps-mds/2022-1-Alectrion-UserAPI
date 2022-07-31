@@ -1,14 +1,9 @@
 import { Controller } from '../protocols/controller'
 import { UseCase } from '../../useCase/protocols/useCase'
 import { Request, Response } from 'express'
-import CreateUserUseCase from '../../useCase/createUser/createUserUseCase'
-import { BcryptAdapter } from '../../adapters/bcryptAdapter'
 
 class CreateUserController implements Controller {
-  private useCase: UseCase
-  constructor() {
-    this.useCase = new CreateUserUseCase(new BcryptAdapter())
-  }
+  constructor(private readonly useCase: UseCase) {}
 
   async handle(req: Request, res: Response): Promise<any> {
     const user = req.body
@@ -16,8 +11,8 @@ class CreateUserController implements Controller {
     const response = await this.useCase.execute(user)
     return response.isSuccess
       ? res.status(200).json(response.data)
-      : res.status(500).json({ error: 'Erro ao atualizar usuário' })
+      : res.status(500).json({ error: response.data.message })
   }
 }
 
-export default new CreateUserController()
+export default CreateUserController

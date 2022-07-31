@@ -1,5 +1,6 @@
 import {
   Column,
+  CreateDateColumn,
   Entity,
   PrimaryGeneratedColumn,
   UpdateDateColumn
@@ -7,7 +8,7 @@ import {
 import { Job } from './userEnum/job'
 import { Role } from './userEnum/role'
 
-@Entity('users')
+@Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
   id: string
@@ -38,10 +39,11 @@ export class User {
   @Column()
   password: string
 
-  @Column({ default: () => 'NOW()' })
+  @Column({ type: 'timestamptz' })
+  @CreateDateColumn()
   createdAt: Date
 
-  @Column({ default: () => 'NOW()' })
+  @Column({ type: 'timestamptz' })
   @UpdateDateColumn()
   updatedAt: Date
 }

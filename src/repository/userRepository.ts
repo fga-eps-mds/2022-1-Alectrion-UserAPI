@@ -50,16 +50,18 @@ class UserRepository implements Repository {
     name: string
     email: string
     username: string
-    jobFunction: Job
+    job: Job
     password: string
   }): Promise<User | undefined> {
-    const { name, email, password, username, jobFunction } = params
+    const { name, email, password, username, job } = params
+    console.log(job)
+
     const user = await this.userRepository.create({
       name,
       email,
       password,
       username,
-      job: jobFunction,
+      job,
       role: Role.ADMIN
     })
     this.userRepository.save(user)

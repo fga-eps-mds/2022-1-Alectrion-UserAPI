@@ -41,12 +41,13 @@ class CreateUserUseCase implements UseCase {
       return { isSuccess: false, data: { message: 'username já utilizado' } }
     }
     const hashedPassword = this.encryptor.encrypt(createUserData.password)
+
     const user = await this.userRepository.createUser({
       name: createUserData.name,
       password: hashedPassword,
       email: createUserData.email,
       username: createUserData.username,
-      jobFunction: createUserData.jobFunction
+      job: createUserData.jobFunction === 'admin' ? Job.DEL : Job.GENERIC
     })
     if (user !== undefined) {
       return { isSuccess: true, data: { email: user.email, job: user.job } }
