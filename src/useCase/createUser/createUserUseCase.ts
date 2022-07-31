@@ -9,7 +9,6 @@
 
 import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
-import UserRepository from '../../repository/userRepository'
 import { Encryptor } from '../../services/encryptor'
 import { Job } from '../../domain/entities/user'
 interface CreateUserData {
@@ -20,11 +19,11 @@ interface CreateUserData {
   password: string
 }
 
-class CreateUserUseCase implements UseCase {
-  private userRepository: Repository
-  constructor(private readonly encryptor: Encryptor) {
-    this.userRepository = new UserRepository()
-  }
+export class CreateUserUseCase implements UseCase {
+  constructor(
+    private readonly encryptor: Encryptor,
+    private readonly userRepository: Repository
+  ) {}
 
   async execute(createUserData: CreateUserData): Promise<UseCaseReponse> {
     const userByEmail = await this.userRepository.findOneByEmail(
@@ -59,5 +58,3 @@ class CreateUserUseCase implements UseCase {
     }
   }
 }
-
-export default CreateUserUseCase
