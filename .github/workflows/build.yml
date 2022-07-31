@@ -44,4 +44,4 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           push: true
-          tags: alectrion/repo:${{secrets.IMAGE_TAG}}
+          tags: alectrion/repo:user-api-${{secrets.IMAGE_TAG}}
