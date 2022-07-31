@@ -25,7 +25,6 @@ jobs:
   deploy:
     name: Deploy
     environment: develop
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses:  ./.github/workflows/deploy.yml
+    get-action:
+      uses: ./.github/workflows/action.yml
+      secrets: inherit
