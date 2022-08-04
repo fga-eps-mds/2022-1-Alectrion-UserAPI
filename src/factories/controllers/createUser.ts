@@ -2,8 +2,5 @@ import { CreateUserController } from '../../presentation/controller/createUserCo
 import { makeCreateUser } from '../useCases/createUser'
 
 export const makeCreateUserController = () => {
-  const usecase = makeCreateUser()
-  console.log(usecase)
-
   return new CreateUserController(makeCreateUser())
 }

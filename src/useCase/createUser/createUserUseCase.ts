@@ -1,12 +1,3 @@
-// Validar usuário com email repetido (consultar repositorio de usuario)
-// Validar username repetido (consultar repositorio de usuario)
-// Caso passe por essas duas verificacoes:
-// Fazer hash da senha antes de enviar pro db
-// if Sucesso:
-// Se o banco criar o usuário, retorna dados do usuario com sanitização (sem a senha)
-// Se der errado:
-// Tratamento de erros (usuário existe, dados não cadastrados...)
-
 import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
 import { Encryptor } from '../../services/encryptor'
@@ -19,25 +10,50 @@ interface CreateUserData {
   password: string
 }
 
-export class CreateUserUseCase implements UseCase {
+export class UserAlreadyExistsError extends Error {
+  constructor(message: string) {
+    super(message)
+    this.name = 'UserAlreadyExists'
+  }
+}
+
+export class CreateUserError extends Error {
+  constructor() {
+    super('Não foi possível criar o usuário')
+    this.name = 'UserAlreadyExists'
+  }
+}
+
+export class CreateUserUseCase
+  implements UseCase<{ email: string; job: string }>
+{
   constructor(
     private readonly encryptor: Encryptor,
     private readonly userRepository: Repository
   ) {}
 
-  async execute(createUserData: CreateUserData): Promise<UseCaseReponse> {
+  async execute(
+    createUserData: CreateUserData
+  ): Promise<UseCaseReponse<{ email: string; job: string }>> {
     const userByEmail = await this.userRepository.findOneByEmail(
       createUserData.email
     )
+
     if (userByEmail !== undefined) {
-      return { isSuccess: false, data: { message: 'email já utilizado' } }
+      return {
+        isSuccess: false,
+        error: new UserAlreadyExistsError('email já utilizado')
+      }
     }
 
     const userByUsername = await this.userRepository.findOneByUsername(
       createUserData.username
     )
     if (userByUsername !== undefined) {
-      return { isSuccess: false, data: { message: 'username já utilizado' } }
+      return {
+        isSuccess: false,
+        error: new UserAlreadyExistsError('username já utilizado')
+      }
     }
     const hashedPassword = this.encryptor.encrypt(createUserData.password)
 
@@ -53,7 +69,7 @@ export class CreateUserUseCase implements UseCase {
     } else {
       return {
         isSuccess: false,
-        data: { message: 'Não foi possível criar o usuário' }
+        error: new CreateUserError()
       }
     }
   }

@@ -1,8 +1,9 @@
-export interface UseCaseReponse {
+export interface UseCaseReponse<T> {
   isSuccess: Boolean
-  data: any
+  data?: T
+  error?: Error
 }
 
-export interface UseCase {
-  execute(data: any): Promise<UseCaseReponse>
+export interface UseCase<T> {
+  execute(data: any): Promise<UseCaseReponse<T>>
 }

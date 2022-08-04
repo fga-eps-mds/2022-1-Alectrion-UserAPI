@@ -1,18 +1,38 @@
+import { UserAlreadyExistsError } from './../../useCase/createUser/createUserUseCase'
 import { Controller } from '../protocols/controller'
-import { Request, Response } from 'express'
 import { CreateUserUseCase } from '../../useCase/createUser/createUserUseCase'
+import { badRequest, HttpResponse, ok, serverError } from '../helpers'
+import { BadRequestError } from '../errors'
+import { Job } from '../../domain/entities/user'
 
-export class CreateUserController implements Controller {
-  constructor(private readonly createUser: CreateUserUseCase) {}
+type HttpRequest = {
+  name: string
+  email: string
+  username: string
+  jobFunction: Job
+  password: string
+}
+type Model =
+  | Error
+  | {
+      email: string
+      job: string
+    }
 
-  async handle(req: Request, res: Response): Promise<any> {
-    console.log('teste', this.createUser)
+export class CreateUserController extends Controller {
+  constructor(private readonly createUser: CreateUserUseCase) {
+    super()
+  }
 
-    const user = req.body
-    console.log('Body: ', user)
+  async perform(params: HttpRequest): Promise<HttpResponse<Model>> {
+    const user = params
     const response = await this.createUser.execute(user)
-    return response.isSuccess
-      ? res.status(200).json(response.data)
-      : res.status(500).json({ error: response.data.message })
+    if (response.isSuccess && response.data) {
+      return ok(response.data)
+    } else {
+      if (response.error instanceof UserAlreadyExistsError) {
+        return badRequest(new BadRequestError(response.error.message))
+      } else return serverError(response.error)
+    }
   }
 }

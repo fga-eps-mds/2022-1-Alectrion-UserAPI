@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
 export enum Job {
-  DEL = 'admin',
+  DEL = 'delegado',
   GENERIC = 'undefined'
 }

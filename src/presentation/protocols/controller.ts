@@ -1,10 +1,13 @@
-import { Request, Response } from 'express'
+import { HttpResponse, serverError } from '../helpers'
 
-export interface HttpResponse {
-  status: Number
-  body: any
-}
+export abstract class Controller {
+  abstract perform(httpRequest: any): Promise<HttpResponse>
 
-export interface Controller {
-  handle(req: Request, res: Response): Promise<any>
+  async handle(httpRequest: any): Promise<HttpResponse> {
+    try {
+      return await this.perform(httpRequest)
+    } catch (error) {
+      return serverError(error)
+    }
+  }
 }
