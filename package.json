@@ -4,16 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p tsconfig.json",
     "typeorm": "ts-node-dev node_modules/.bin/typeorm",
     "migration:generate": "npm run typeorm -- migration:generate src/db/migrations/default -d src/db/config.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/db/config.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/db/config.ts",
     "dev": "ts-node-dev --respawn --transpile-only src/main.ts",
     "test": "jest --passWithNoTests --no-cache --runInBand",
-    "test:watch": "npm run test -- --watch",
-    "test:staged": "npm run test -- --findRelatedTests",
-    "test:coverage": "CI=true npm run test -- --coverage",
-    "test:integration": "npm run test -- --config ./jest.integration.config.js"
+    "test:watch": "npm t -- --watch",
+    "test:staged": "npm t -- --findRelatedTests",
+    "test:coverage": "npm t -- --coverage --collectCoverageFrom='./src/**'"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "jest-mock-extended": "^2.0.7",
     "prettier": "^2.7.1",
     "prettier-config-standard": "^5.0.0",
+    "rimraf": "^3.0.2",
     "ts-jest": "^28.0.7",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",

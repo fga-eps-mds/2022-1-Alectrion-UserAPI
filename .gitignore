@@ -3,3 +3,4 @@ coverage
 .env
 db.env
 data
+dist
