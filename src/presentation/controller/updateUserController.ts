@@ -1,22 +1,33 @@
 import { Controller } from '../protocols/controller'
-import { UseCase } from '../../useCase/protocols/useCase'
-import { Request, Response } from 'express'
-import UpdateUserUseCase from '../../useCase/updateUser/updateUserUseCase'
+import {
+  UpadateUserData,
+  UpadteUserError,
+  UpdateUserUseCase
+} from '../../useCase/updateUser/updateUserUseCase'
+import { badRequest, HttpResponse, ok, serverError } from '../helpers'
+import { BadRequestError } from '../errors'
 
-class UpdateUserControler implements Controller {
-  private useCase: UseCase
-  constructor() {
-    this.useCase = new UpdateUserUseCase()
+type Model =
+  | Error
+  | {
+      message: string
+    }
+
+export class UpdateUserControler extends Controller {
+  constructor(private readonly updateUserUseCase: UpdateUserUseCase) {
+    super()
   }
 
-  async handle(req: Request, res: Response): Promise<any> {
-    const user = req.body
-    console.log('Body: ', user)
-    const response = await this.useCase.execute(user)
-    return response.isSuccess
-      ? res.status(200).json(response.data)
-      : res.status(500).json({ error: 'Erro ao atualizar usuário' })
+  async perform(httpRequest: UpadateUserData): Promise<HttpResponse<Model>> {
+    const user = httpRequest
+    const response = await this.updateUserUseCase.execute(user)
+
+    if (response.isSuccess && response.data) {
+      return ok(response.data)
+    } else {
+      if (response.error instanceof UpadteUserError) {
+        return badRequest(new BadRequestError(response.error.message))
+      } else return serverError(response.error)
+    }
   }
 }
-
-export default new UpdateUserControler()
