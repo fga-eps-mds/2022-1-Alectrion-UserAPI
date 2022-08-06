@@ -1,10 +1,10 @@
-module.exports = {
+export default {
   clearMocks: true,
 
   collectCoverage: true,
 
   collectCoverageFrom: [
-    '<rootDir>/src/**/*.ts',
+    '**/*.ts',
     '!<rootDir>/src/*.{js,ts}',
     '!<rootDir>/src/db/**/*.{js,ts}',
     '!<rootDir>/src/presentation/protocols/*.{js,ts}',
@@ -15,9 +15,11 @@ module.exports = {
   coverageDirectory: 'coverage',
 
   roots: ['<rootDir>/src/'],
+
   testEnvironment: 'node',
 
   transform: {
     '.+\\.ts': 'ts-jest'
-  }
+  },
+  testMatch: ['**/*.spec.ts']
 }

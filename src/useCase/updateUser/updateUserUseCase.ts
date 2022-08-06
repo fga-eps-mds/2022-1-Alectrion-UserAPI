@@ -1,7 +1,7 @@
 import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
-import UserRepository from '../../repository/userRepository'
-interface UpadateUserData {
+
+export interface UpadateUserData {
   userId: string
   name?: string
   email?: string
@@ -10,23 +10,24 @@ interface UpadateUserData {
   password?: string
 }
 
-class UpdateUserUseCase implements UseCase {
-  private userRepository: Repository
+export class UpadteUserError extends Error {
   constructor() {
-    this.userRepository = new UserRepository()
-  }
-
-  async execute(userUpadate: UpadateUserData): Promise<UseCaseReponse> {
-    return (await this.userRepository.updateOne(userUpadate))
-      ? {
-          isSuccess: true,
-          data: { message: 'usuario atualizado' }
-        }
-      : {
-          isSuccess: false,
-          data: { error: 'usuario não atualizado' }
-        }
+    super('Não foi possivel atualizar o usuário.')
+    this.name = 'UpadteUserError'
   }
 }
 
-export default UpdateUserUseCase
+export class UpdateUserUseCase implements UseCase<{ message: string }> {
+  constructor(private readonly userRepository: Repository) {}
+
+  async execute(
+    userUpadate: UpadateUserData
+  ): Promise<UseCaseReponse<{ message: string }>> {
+    return (await this.userRepository.updateOne(userUpadate))
+      ? { isSuccess: true, data: { message: 'Usuário atualizado!' } }
+      : {
+          isSuccess: false,
+          error: new UpadteUserError()
+        }
+  }
+}

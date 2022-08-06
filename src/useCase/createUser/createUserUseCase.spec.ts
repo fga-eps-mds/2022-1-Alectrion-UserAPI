@@ -1,4 +1,5 @@
 import {
+  CreateUserData,
   CreateUserError,
   CreateUserUseCase,
   UserAlreadyExistsError
@@ -12,11 +13,11 @@ describe('CreateUserUseCase', () => {
   let sut: CreateUserUseCase
   let encryptor: MockProxy<Encryptor>
   let userRepository: MockProxy<Repository>
-  const body = {
+  const body: CreateUserData = {
     name: 'teste',
     email: 't@t.com',
     username: 'testador',
-    jobFunction: Job.DEL,
+    jobFunction: 'GENERIC',
     password: 'testando'
   }
   beforeEach(() => {
