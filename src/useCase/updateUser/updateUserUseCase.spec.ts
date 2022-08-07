@@ -10,8 +10,8 @@ import { datatype } from 'faker'
 const repositoryMocked = mock<Repository>()
 const updateUserUseCase = new UpdateUserUseCase(repositoryMocked)
 
-describe('Teste caso de uso atualização de usuário', () => {
-  it('Deve atualizar um usuário com sucesso', async () => {
+describe('Should test use case update user', () => {
+  it('Should update use with success', async () => {
     repositoryMocked.updateOne.mockResolvedValue(true)
     const upadetUserData: UpadateUserData = {
       userId: datatype.uuid(),
@@ -28,7 +28,7 @@ describe('Teste caso de uso atualização de usuário', () => {
     expect(repositoryMocked.updateOne).toHaveBeenCalledTimes(1)
   })
 
-  it('Deve falhar ao atualizar usuário.', async () => {
+  it('Should fail when update user.', async () => {
     repositoryMocked.updateOne.mockResolvedValue(false)
     const upadetUserData: UpadateUserData = {
       userId: datatype.uuid(),
