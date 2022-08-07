@@ -10,7 +10,7 @@ on:
      - develop
 jobs:
   sonarcloud:
-    if: github.ref == 'refs/heads/develop'
+    # if: github.ref == 'refs/heads/develop'
     name: SonarCloud
     runs-on: ubuntu-latest
 
