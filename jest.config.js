@@ -1,23 +1,15 @@
 module.exports = {
-  clearMocks: true,
-
-  collectCoverage: true,
-
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
-    '!<rootDir>/src/*.{js,ts}',
-    '!<rootDir>/src/db/**/*.{js,ts}',
-    '!<rootDir>/src/presentation/protocols/*.{js,ts}',
-    '!<rootDir>/src/factories/**/*.{js,ts}',
-    '!<rootDir>/src/repository/userRepository.ts'
+    '!<rootDir>/src/main/**',
+    '!<rootDir>/src/**/index.ts'
   ],
-
   coverageDirectory: 'coverage',
-
-  roots: ['<rootDir>/src/'],
-  testEnvironment: 'node',
-
+  coverageProvider: 'babel',
+  testMatch: ['**/*.spec.ts'],
+  roots: ['<rootDir>/src'],
   transform: {
-    '.+\\.ts': 'ts-jest'
-  }
+    '\\.ts$': 'ts-jest'
+  },
+  clearMocks: true
 }
