@@ -1,13 +1,14 @@
 /* eslint-disable no-unused-vars */
 export enum Job {
-  DEL = 'admin',
-  GENERIC = 'undefined'
+  DEL = 'chiefOfficer',
+  GENERIC = 'generic'
 }
 export enum Role {
   ADMIN = 'admin',
   MANAGER = 'manager',
   DEFAULT = 'default'
 }
+
 export type User = {
   id: string
 

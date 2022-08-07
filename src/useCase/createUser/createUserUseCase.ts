@@ -2,11 +2,12 @@ import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
 import { Encryptor } from '../../services/encryptor'
 import { Job } from '../../domain/entities/user'
-interface CreateUserData {
+
+export interface CreateUserData {
   name: string
   email: string
   username: string
-  jobFunction: Job
+  jobFunction: 'DEL' | 'GENERIC'
   password: string
 }
 
@@ -20,7 +21,7 @@ export class UserAlreadyExistsError extends Error {
 export class CreateUserError extends Error {
   constructor() {
     super('Não foi possível criar o usuário')
-    this.name = 'UserAlreadyExists'
+    this.name = 'CreateUserError'
   }
 }
 
@@ -62,8 +63,9 @@ export class CreateUserUseCase
       password: hashedPassword,
       email: createUserData.email,
       username: createUserData.username,
-      job: createUserData.jobFunction === 'admin' ? Job.DEL : Job.GENERIC
+      job: Job[createUserData.jobFunction]
     })
+
     if (user !== undefined) {
       return { isSuccess: true, data: { email: user.email, job: user.job } }
     } else {

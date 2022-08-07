@@ -83,9 +83,6 @@ describe('Teste controller atualização de usuário', () => {
     }
 
     const response = await upadateUserController.perform(request)
-    console.log('Response: ', response)
     expect(response).toEqual(controllerReponseExpected)
-    // expect(upadateUserUseCaseMocked.execute).toBeCalledTimes(1)
-    // expect(upadateUserUseCaseMocked.execute).toHaveBeenCalledWith(request)
   })
 })

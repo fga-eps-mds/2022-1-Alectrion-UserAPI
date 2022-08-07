@@ -1,6 +1,7 @@
 import { dataSource } from '../db/config'
 import { User } from '../db/entities/user'
-import { Job } from '../domain/entities/user'
+import { Role } from '../db/entities/userEnum/role'
+import { Job } from '../db/entities/userEnum/job'
 import { Repository } from './protocol/repository'
 
 class UserRepository implements Repository {
@@ -50,18 +51,22 @@ class UserRepository implements Repository {
     name: string
     email: string
     username: string
-    job?: Job
+    job: Job
+    role: Role
     password: string
   }): Promise<User | undefined> {
-    const { name, email, password, username } = params
+    const { name, email, password, username, job, role } = params
 
     const user = this.userRepository.create({
       name,
       email,
       password,
-      username
+      username,
+      job: job ?? Job.GENERIC,
+      role: role ?? Role.DEFAULT
     })
-    this.userRepository.save(user)
+
+    await this.userRepository.save(user)
     return user
   }
 }

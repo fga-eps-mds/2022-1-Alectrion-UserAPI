@@ -3,13 +3,12 @@ import { Controller } from '../protocols/controller'
 import { CreateUserUseCase } from '../../useCase/createUser/createUserUseCase'
 import { badRequest, HttpResponse, ok, serverError } from '../helpers'
 import { BadRequestError } from '../errors'
-import { Job } from '../../domain/entities/user'
 
 type HttpRequest = {
   name: string
   email: string
   username: string
-  jobFunction: Job
+  jobFunction: 'DEL' | 'GENERIC'
   password: string
 }
 type Model =
@@ -25,8 +24,7 @@ export class CreateUserController extends Controller {
   }
 
   async perform(params: HttpRequest): Promise<HttpResponse<Model>> {
-    const user = params
-    const response = await this.createUser.execute(user)
+    const response = await this.createUser.execute(params)
     if (response.isSuccess && response.data) {
       return ok(response.data)
     } else {
