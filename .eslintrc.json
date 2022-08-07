@@ -11,7 +11,5 @@
     "sourceType": "module"
   },
   "plugins": ["@typescript-eslint"],
-  "rules": {
-    "no-useless-constructor": "off"
-  }
+  "rules": {}
 }

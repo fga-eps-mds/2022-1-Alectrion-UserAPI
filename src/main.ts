@@ -1,25 +1,14 @@
 import 'reflect-metadata'
 import express, { json } from 'express'
-import routes from './routes'
-import { dataSource } from './db/config'
-import cors from 'cors'
-
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!')
-  })
-  .catch((err) => {
-    console.error('Error during Data Source initialization:', err)
-  })
 
 const port = 4001
 
 const app = express()
 
-app.use(cors())
-
 app.use(json())
-app.use('/user', routes)
+
+app.get('/', (req, res) => {
+  res.json({ message: 'User api' })
+})
 
 app.listen(port, () => console.log(`rodando na porta ${port}`))
