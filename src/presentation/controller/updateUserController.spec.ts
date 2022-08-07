@@ -8,16 +8,19 @@ import { datatype } from 'faker'
 import { ServerError } from '../errors'
 const upadateUserUseCaseMocked = mock<UpdateUserUseCase>()
 const upadateUserController = new UpdateUserControler(upadateUserUseCaseMocked)
-describe('Teste controller atualização de usuário', () => {
-  it('Deve retonar ok', async () => {
-    const request = {
-      userId: datatype.string(),
-      name: datatype.string(),
-      email: datatype.string(),
-      username: datatype.string(),
-      jobFunction: datatype.string(),
-      password: datatype.string()
-    }
+
+const request = {
+  userId: datatype.string(),
+  name: datatype.string(),
+  email: datatype.string(),
+  username: datatype.string(),
+  jobFunction: 'GENERICO',
+  role: 'BASICO',
+  password: datatype.string()
+}
+
+describe('Should test update user controller', () => {
+  it('Should update user with success', async () => {
     const useCaseReponseMock = {
       isSuccess: true,
       data: { message: 'Usuário atualizado!' }
@@ -36,15 +39,7 @@ describe('Teste controller atualização de usuário', () => {
     expect(upadateUserUseCaseMocked.execute).toHaveBeenCalledWith(request)
   })
 
-  it('Deve retonar 400 quando requisicao ruim', async () => {
-    const request = {
-      userId: datatype.string(),
-      name: datatype.string(),
-      email: datatype.string(),
-      username: datatype.string(),
-      jobFunction: datatype.string(),
-      password: datatype.string()
-    }
+  it('Should return bad request when fail update', async () => {
     const useCaseReponseMock = {
       isSuccess: false,
       error: new UpadteUserError()
@@ -62,15 +57,7 @@ describe('Teste controller atualização de usuário', () => {
     expect(upadateUserUseCaseMocked.execute).toHaveBeenCalledWith(request)
   })
 
-  it('Deve retonar 500 quando o servidor não precessar', async () => {
-    const request = {
-      userId: datatype.string(),
-      name: datatype.string(),
-      email: datatype.string(),
-      username: datatype.string(),
-      jobFunction: datatype.string(),
-      password: datatype.string()
-    }
+  it('Should return server errir whrn fail ', async () => {
     const useCaseReponseMock = {
       isSuccess: false,
       error: new ServerError()

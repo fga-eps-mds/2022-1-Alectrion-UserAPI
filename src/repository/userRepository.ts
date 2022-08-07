@@ -62,8 +62,8 @@ class UserRepository implements Repository {
       email,
       password,
       username,
-      job: job ?? Job.GENERIC,
-      role: role ?? Role.DEFAULT
+      job: job ?? Job.GENERICO,
+      role: role ?? Role.BASICO
     })
 
     await this.userRepository.save(user)

@@ -7,18 +7,21 @@ import {
 import { MockProxy, mock } from 'jest-mock-extended'
 import { Encryptor } from '../../services/encryptor'
 import { Repository } from '../../repository/protocol/repository'
-import { Job, Role } from '../../domain/entities/user'
+import { datatype } from 'faker'
+import { Job } from '../../db/entities/userEnum/job'
+import { Role } from '../../db/entities/userEnum/role'
 
-describe('CreateUserUseCase', () => {
+describe('Should test use case create user', () => {
   let sut: CreateUserUseCase
   let encryptor: MockProxy<Encryptor>
   let userRepository: MockProxy<Repository>
   const body: CreateUserData = {
-    name: 'teste',
-    email: 't@t.com',
-    username: 'testador',
-    jobFunction: 'GENERIC',
-    password: 'testando'
+    name: datatype.string(),
+    email: `${datatype.string()}@t.com`,
+    username: datatype.string(),
+    jobFunction: 'GENERICO',
+    role: 'BASICO',
+    password: datatype.string()
   }
   beforeEach(() => {
     userRepository = mock()
@@ -27,14 +30,14 @@ describe('CreateUserUseCase', () => {
     userRepository.findOneByEmail.mockResolvedValue(undefined)
     userRepository.findOneByUsername.mockResolvedValue(undefined)
     userRepository.createUser.mockResolvedValue({
-      name: 'teste',
-      email: 't@t.com',
+      name: datatype.string(),
+      email: `${datatype.string()}@t.com`,
+      username: datatype.string(),
       password: 'any_password',
-      username: 'testador',
       id: 'any_id',
       createdAt: new Date(),
       updatedAt: new Date(),
-      job: Job.DEL,
+      job: Job.GENERICO,
       role: Role.ADMIN
     })
   })
@@ -48,14 +51,14 @@ describe('CreateUserUseCase', () => {
 
   it('should return UserAlreadyExistsError if userRepository returns data', async () => {
     userRepository.findOneByEmail.mockResolvedValueOnce({
-      name: 'name',
-      email: 't@t.com',
+      name: datatype.string(),
+      email: `${datatype.string()}@t.com`,
+      username: datatype.string(),
       password: 'any_password',
-      username: 'any_username',
       id: 'any_email',
       createdAt: new Date(),
       updatedAt: new Date(),
-      job: Job.DEL,
+      job: Job.GENERICO,
       role: Role.ADMIN
     })
 
@@ -69,14 +72,14 @@ describe('CreateUserUseCase', () => {
 
   it('should return UserAlreadyExistsError if userRepository returns data', async () => {
     userRepository.findOneByUsername.mockResolvedValueOnce({
-      name: 'name',
-      email: 't@t.com',
+      name: datatype.string(),
+      email: `${datatype.string()}@t.com`,
+      username: datatype.string(),
       password: 'any_password',
-      username: 'any_username',
       id: 'any_email',
       createdAt: new Date(),
       updatedAt: new Date(),
-      job: Job.DEL,
+      job: Job.GENERICO,
       role: Role.ADMIN
     })
 
