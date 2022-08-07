@@ -8,7 +8,14 @@ type HttpRequest = {
   name: string
   email: string
   username: string
-  jobFunction: 'DEL' | 'GENERIC'
+  jobFunction:
+    | 'DELEGADO'
+    | 'AGENTE_POLICIA'
+    | 'ESCRIVAO'
+    | 'COORDENADOR'
+    | 'CHEFE_SECAO'
+    | 'GENERICO'
+  role: 'ADMIN' | 'GERENTE' | 'BASICO'
   password: string
 }
 type Model =

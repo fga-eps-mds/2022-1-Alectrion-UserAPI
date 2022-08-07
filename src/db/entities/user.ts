@@ -25,14 +25,14 @@ export class User {
   @Column({
     type: 'enum',
     enum: Job,
-    default: Job.GENERIC
+    default: Job.GENERICO
   })
   job: Job
 
   @Column({
     type: 'enum',
     enum: Role,
-    default: Role.DEFAULT
+    default: Role.BASICO
   })
   role: Role
 

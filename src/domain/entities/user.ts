@@ -1,13 +1,7 @@
 /* eslint-disable no-unused-vars */
-export enum Job {
-  DEL = 'chiefOfficer',
-  GENERIC = 'generic'
-}
-export enum Role {
-  ADMIN = 'admin',
-  MANAGER = 'manager',
-  DEFAULT = 'default'
-}
+
+import { Job } from '../../db/entities/userEnum/job'
+import { Role } from '../../db/entities/userEnum/role'
 
 export type User = {
   id: string
