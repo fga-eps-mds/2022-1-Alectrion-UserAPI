@@ -10,7 +10,7 @@ class UserRepository implements Repository {
     this.userRepository = dataSource.getRepository(User)
   }
 
-  async updateOne(userData: any): Promise<Boolean> {
+  async updateOne(userData: any): Promise<boolean> {
     const updateUserData = Object.assign({}, userData)
     delete updateUserData.userId
     await this.userRepository.update(userData.userId, updateUserData)
@@ -62,8 +62,8 @@ class UserRepository implements Repository {
       email,
       password,
       username,
-      job: job ?? Job.GENERIC,
-      role: role ?? Role.DEFAULT
+      job: job ?? Job.GENERICO,
+      role: role ?? Role.BASICO
     })
 
     await this.userRepository.save(user)

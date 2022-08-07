@@ -1,13 +1,21 @@
 import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
 import { Encryptor } from '../../services/encryptor'
-import { Job } from '../../domain/entities/user'
+import { Job } from '../../db/entities/userEnum/job'
+import { Role } from '../../db/entities/userEnum/role'
 
 export interface CreateUserData {
   name: string
   email: string
   username: string
-  jobFunction: 'DEL' | 'GENERIC'
+  jobFunction:
+    | 'DELEGADO'
+    | 'AGENTE_POLICIA'
+    | 'ESCRIVAO'
+    | 'COORDENADOR'
+    | 'CHEFE_SECAO'
+    | 'GENERICO'
+  role: 'ADMIN' | 'GERENTE' | 'BASICO'
   password: string
 }
 
@@ -63,7 +71,8 @@ export class CreateUserUseCase
       password: hashedPassword,
       email: createUserData.email,
       username: createUserData.username,
-      job: Job[createUserData.jobFunction]
+      job: Job[createUserData.jobFunction],
+      role: Role[createUserData.role]
     })
 
     if (user !== undefined) {
