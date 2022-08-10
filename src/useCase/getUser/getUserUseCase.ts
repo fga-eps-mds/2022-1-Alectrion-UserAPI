@@ -33,3 +33,16 @@ export class GetUserByEmailUseCase implements UseCase<any> {
           };
     }
   }
+
+
+export class GetUserByUsernameUseCase implements UseCase<any> {
+    constructor(private readonly userRepository: Repository) {}
+    async execute(Username: string): Promise<UseCaseReponse<{ user: User }>> {
+      return (await this.userRepository.findOne(Username))
+        ? { isSuccess: true, data: await this.userRepository.findOne(Username) }
+        : {
+            isSuccess: false,
+            error: new GetUserError(),
+          };
+    }
+  }
