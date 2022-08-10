@@ -4,7 +4,7 @@ import { User } from "../../domain/entities/user";
 
 export class GetUserError extends Error {
   constructor() {
-    super("Não foi possivel encontrar o usuar.");
+    super("Não foi possivel encontrar o usuário!.");
     this.name = "GetUserError";
   }
 }
@@ -20,3 +20,16 @@ export class GetUserByIdUseCase implements UseCase<any> {
         };
   }
 }
+
+export class GetUserByEmailUseCase implements UseCase<any> {
+    constructor(private readonly userRepository: Repository) {}
+
+    async execute(email: string): Promise<UseCaseReponse<{ user: User }>> {
+      return (await this.userRepository.findOne(email))
+        ? { isSuccess: true, data: await this.userRepository.findOne(email) }
+        : {
+            isSuccess: false,
+            error: new GetUserError(),
+          };
+    }
+  }
