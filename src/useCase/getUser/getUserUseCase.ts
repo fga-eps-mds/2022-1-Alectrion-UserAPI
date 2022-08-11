@@ -4,7 +4,7 @@ import { User } from "../../domain/entities/user";
 
 export class GetUserError extends Error {
   constructor() {
-    super("Não foi possivel encontrar o usuário!.");
+    super("Não foi possivel encontrar o usuário!");
     this.name = "GetUserError";
   }
 }
