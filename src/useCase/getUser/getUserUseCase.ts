@@ -9,40 +9,40 @@ export class GetUserError extends Error {
   }
 }
 
-export class GetUserByIdUseCase implements UseCase<any> {
+export interface FindUserInput {
+  userName? : string;
+  email? : string;
+  userId? : string;
+
+}
+
+export class GetUserUseCase implements UseCase<{user: User}> {
   constructor(private readonly userRepository: Repository) {}
-  async execute(userId: string): Promise<UseCaseReponse<{ user: User }>> {
-    return (await this.userRepository.findOne(userId))
-      ? { isSuccess: true, data: await this.userRepository.findOne(userId) }
-      : {
-          isSuccess: false,
-          error: new GetUserError(),
-        };
+  async execute(userData: FindUserInput): Promise<UseCaseReponse<{ user: User }>> {
+
+    let userFound = null;
+
+    if(userData.userName!){
+       userFound = await this.userRepository.findOneByUsername(userData.userName)
+
+    }
+    else if(userData.email!){
+       userFound = await this.userRepository.findOneByEmail(userData.email)
+    }
+    else if(userData.userId!){
+       userFound = await this.userRepository.findOne(userData.userId)
+
+    }
+    else{
+      return {
+        isSuccess: false,
+        error: new GetUserError(),
+      };
+    }
+    return { isSuccess: true, data:  userFound }
+      
   }
 }
 
-export class GetUserByEmailUseCase implements UseCase<any> {
-    constructor(private readonly userRepository: Repository) {}
 
-    async execute(email: string): Promise<UseCaseReponse<{ user: User }>> {
-      return (await this.userRepository.findOne(email))
-        ? { isSuccess: true, data: await this.userRepository.findOne(email) }
-        : {
-            isSuccess: false,
-            error: new GetUserError(),
-          };
-    }
-  }
-
-
-export class GetUserByUsernameUseCase implements UseCase<any> {
-    constructor(private readonly userRepository: Repository) {}
-    async execute(Username: string): Promise<UseCaseReponse<{ user: User }>> {
-      return (await this.userRepository.findOne(Username))
-        ? { isSuccess: true, data: await this.userRepository.findOne(Username) }
-        : {
-            isSuccess: false,
-            error: new GetUserError(),
-          };
-    }
-  }
+  
