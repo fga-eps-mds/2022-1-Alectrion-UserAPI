@@ -22,4 +22,4 @@ app.use(cors())
 app.use(json())
 app.use('/user', routes)
 
-app.listen(port, () => console.log(`rodando na porta ${port}`))
+app.listen(port, '0.0.0.0', () => console.log(`rodando na porta ${port}`))
