@@ -37,6 +37,11 @@ class UserRepository implements Repository {
     return user
   }
 
+  async findAll(): Promise<any> {
+    const users = await this.userRepository.find()
+    return users
+  }
+
   async findOneByUsername(username: string): Promise<any> {
     const user = await this.userRepository.findOneBy({
       username
