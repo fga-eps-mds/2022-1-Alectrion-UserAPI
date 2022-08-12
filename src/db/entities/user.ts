@@ -36,7 +36,7 @@ export class User {
   })
   role: Role
 
-  @Column()
+  @Column({ select: false })
   password: string
 
   @Column({ type: 'timestamptz' })
