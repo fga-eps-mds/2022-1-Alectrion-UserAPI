@@ -1,8 +1,8 @@
 name: heroku-deploy
 on:
-  push:
-    branches:
-     - config/ci-cd
+ pull_request:
+  branches:
+     - main
 
 jobs:
   deploy-heroku:
