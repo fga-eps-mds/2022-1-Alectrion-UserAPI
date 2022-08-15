@@ -1,5 +1,5 @@
 export interface UseCaseReponse<T> {
-  isSuccess: Boolean
+  isSuccess: boolean
   data?: T
   error?: Error
 }
