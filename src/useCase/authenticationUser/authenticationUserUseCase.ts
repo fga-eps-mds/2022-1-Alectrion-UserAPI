@@ -15,7 +15,8 @@ export interface DataUserLogin {
   password: string;
 }
 
-export class AuthenticateUserUseCase implements UseCase<{ token: string }> {
+
+export class AuthenticateUserUseCase implements UseCase<{ token: string, expireIn: string, email: string; name: string}> {
   constructor(
     private readonly userRepository: Repository,
     private readonly encryptor: Encryptor,
@@ -23,7 +24,7 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string }> {
   ) {}
   async execute(
     userData: DataUserLogin
-  ): Promise<UseCaseReponse<{ token: string }>> {
+  ): Promise<UseCaseReponse<{ token: string, expireIn: string, email: string; name: string}>> {
     let userFound = null;
     userFound = await this.userRepository.findToAuthenticate(userData.username);
 
@@ -31,24 +32,27 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string }> {
       return { isSuccess: false, error: new LoginUserError() };
     }
     let checkPassword;
-    try {
+
       checkPassword = this.encryptor.compare(
         userData.password,
         userFound.password
       );
-    } catch (error) {
-
-    }
+  
 
     if (!checkPassword) {
       return { isSuccess: false, error: new LoginUserError() };
     }
+    const timeTokenExpire = '1800s'
     const tokenRequested = this.token.generateToken(
       {userId : userFound.id,
        role: userFound.role},
-      process.env.SECRET_JWT
+      process.env.SECRET_JWT,
+      {
+        expiresIn: timeTokenExpire
+      }
     );
+      
 
-    return { isSuccess: true, data: { token: tokenRequested } };
+    return { isSuccess: true, data: {token: tokenRequested, expireIn: timeTokenExpire ,email: userFound.email, name: userFound.name }};
   }
 }
