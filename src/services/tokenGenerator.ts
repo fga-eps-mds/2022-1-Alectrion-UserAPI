@@ -1,6 +1,6 @@
 
 export interface  Token{
-    generateToken(payload: String, secret: any): string
+    generateToken(payload: object, secret: any): string
 }
 
 
