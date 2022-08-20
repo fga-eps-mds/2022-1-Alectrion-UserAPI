@@ -1,13 +1,11 @@
-import { compare, hashSync } from "bcrypt";
+import {compareSync, hashSync } from "bcrypt";
 import { Encryptor } from "../services/encryptor";
 
 export class BcryptAdapter implements Encryptor {
   compare(passwordLogin: string, passwordDB: string):boolean {
-    let compareResult =  compare(passwordLogin, passwordDB )
-    if(!compareResult){
-      return true;
-    }
-    return false;
+    console.log("senha do login: ",passwordLogin , "senha do banco: ",passwordDB)
+   return compareSync(passwordLogin, passwordDB)
+
   }
   encrypt(password: string) {
     return hashSync(password, 3);
