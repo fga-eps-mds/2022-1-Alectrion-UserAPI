@@ -26,7 +26,7 @@ type Model =
         if(response.isSuccess && response.data){
           console.log("token abaixo")
           console.log(response.data.token)
-          return ok(response.data.token)
+          return ok(response.data)
         }
         return serverError(response.error)
       }
