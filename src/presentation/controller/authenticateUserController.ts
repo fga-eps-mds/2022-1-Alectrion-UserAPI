@@ -24,8 +24,6 @@ type Model =
       async perform(params: HttpRequest): Promise<HttpResponse<Model>> {
         const response = await this.authenticateUserUseCase.execute(params)
         if(response.isSuccess && response.data){
-          console.log("token abaixo")
-          console.log(response.data.token)
           return ok(response.data)
         }
         return serverError(response.error)
