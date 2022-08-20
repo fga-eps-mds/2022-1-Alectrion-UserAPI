@@ -15,7 +15,7 @@ export interface DataUserLogin {
   password: string;
 }
 
-export class AuthenticateUserUseCase implements UseCase<{ token: String }> {
+export class AuthenticateUserUseCase implements UseCase<{ token: string }> {
   constructor(
     private readonly userRepository: Repository,
     private readonly encryptor: Encryptor,
@@ -23,23 +23,30 @@ export class AuthenticateUserUseCase implements UseCase<{ token: String }> {
   ) {}
   async execute(
     userData: DataUserLogin
-  ): Promise<UseCaseReponse<{ token: String }>> {
+  ): Promise<UseCaseReponse<{ token: string }>> {
     let userFound = null;
-    userFound = await this.userRepository.findOneByUsername(userData.username);
+    userFound = await this.userRepository.findToAuthenticate(userData.username);
 
     if (!userFound) {
       return { isSuccess: false, error: new LoginUserError() };
     }
-    const checkPassword = this.encryptor.compare(
-      userFound.password,
-      userData.password
-    );
+    let checkPassword;
+    try {
+      checkPassword = this.encryptor.compare(
+        userData.password,
+        userFound.password
+      );
+    } catch (error) {
+      console.log("erro abaixo do catch");
+      console.log(error);
+    }
 
     if (!checkPassword) {
       return { isSuccess: false, error: new LoginUserError() };
     }
     const tokenRequested = this.token.generateToken(
-      userFound.id,
+      {userId : userFound.id,
+       role: userFound.role},
       process.env.SECRET_JWT
     );
 
