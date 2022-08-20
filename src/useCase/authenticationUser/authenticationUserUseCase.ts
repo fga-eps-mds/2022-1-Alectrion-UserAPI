@@ -37,8 +37,7 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string }> {
         userFound.password
       );
     } catch (error) {
-      console.log("erro abaixo do catch");
-      console.log(error);
+
     }
 
     if (!checkPassword) {
