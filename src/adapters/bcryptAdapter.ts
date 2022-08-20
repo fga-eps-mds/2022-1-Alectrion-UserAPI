@@ -3,7 +3,6 @@ import { Encryptor } from "../services/encryptor";
 
 export class BcryptAdapter implements Encryptor {
   compare(passwordLogin: string, passwordDB: string):boolean {
-    console.log("senha do login: ",passwordLogin , "senha do banco: ",passwordDB)
    return compareSync(passwordLogin, passwordDB)
 
   }
