@@ -16,7 +16,7 @@ export interface DataUserLogin {
 }
 
 
-export class AuthenticateUserUseCase implements UseCase<{ token: string, expireIn: string, email: string; name: string}> {
+export class AuthenticateUserUseCase implements UseCase<{ token: string, expireIn: string, email: string, name: string, role: string}> {
   constructor(
     private readonly userRepository: Repository,
     private readonly encryptor: Encryptor,
@@ -24,7 +24,7 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string, expireI
   ) {}
   async execute(
     userData: DataUserLogin
-  ): Promise<UseCaseReponse<{ token: string, expireIn: string, email: string; name: string}>> {
+  ): Promise<UseCaseReponse<{ token: string, expireIn: string, email: string; name: string, role: string}>> {
     let userFound = null;
     userFound = await this.userRepository.findToAuthenticate(userData.username);
 
@@ -53,6 +53,6 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string, expireI
     );
       
 
-    return { isSuccess: true, data: {token: tokenRequested, expireIn: timeTokenExpire ,email: userFound.email, name: userFound.name }};
+    return { isSuccess: true, data: {token: tokenRequested, expireIn: timeTokenExpire ,email: userFound.email, name: userFound.name, role: userFound.role }};
   }
 }
