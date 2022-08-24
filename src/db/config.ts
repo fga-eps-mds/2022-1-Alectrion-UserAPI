@@ -3,12 +3,9 @@ import { DataSource } from 'typeorm'
 
 export const dataSource = new DataSource({
   type: 'postgres',
-  host: 'localhost',
-  port: 5432,
-  username: 'postgres',
-  password: 'test',
-  database: 'user',
+  url: process.env.DB_URL,
   migrationsRun: true,
   entities: [`${__dirname}/entities/*{.ts, .js}`],
-  migrations: [`${__dirname}/migrations/*{.ts, .js}`]
+  migrations: [`${__dirname}/migrations/*{.ts, .js}`],
+  ssl: { rejectUnauthorized: false }
 })

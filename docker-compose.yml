@@ -11,9 +11,9 @@ services:
       - '5432:5432'
 
   user_api:
-    build: .
     depends_on:
       - db
+    build: .
     env_file:
       - .env
     volumes:
