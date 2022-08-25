@@ -15,8 +15,16 @@ export interface DataUserLogin {
   password: string;
 }
 
-
-export class AuthenticateUserUseCase implements UseCase<{ token: string, expireIn: string, email: string, name: string, role: string}> {
+export class AuthenticateUserUseCase
+  implements
+    UseCase<{
+      token: string;
+      expireIn: string;
+      email: string;
+      name: string;
+      role: string;
+    }>
+{
   constructor(
     private readonly userRepository: Repository,
     private readonly encryptor: Encryptor,
@@ -24,7 +32,15 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string, expireI
   ) {}
   async execute(
     userData: DataUserLogin
-  ): Promise<UseCaseReponse<{ token: string, expireIn: string, email: string; name: string, role: string}>> {
+  ): Promise<
+    UseCaseReponse<{
+      token: string;
+      expireIn: string;
+      email: string;
+      name: string;
+      role: string;
+    }>
+  > {
     let userFound = null;
     userFound = await this.userRepository.findToAuthenticate(userData.username);
 
@@ -33,26 +49,32 @@ export class AuthenticateUserUseCase implements UseCase<{ token: string, expireI
     }
     let checkPassword;
 
-      checkPassword = this.encryptor.compare(
-        userData.password,
-        userFound.password
-      );
-  
+    checkPassword = this.encryptor.compare(
+      userData.password,
+      userFound.password
+    );
 
     if (!checkPassword) {
       return { isSuccess: false, error: new LoginUserError() };
     }
-    const timeTokenExpire = '1800s'
+    const timeTokenExpire = "1800s";
     const tokenRequested = this.token.generateToken(
-      {userId : userFound.id,
-       role: userFound.role},
+      { userId: userFound.id, role: userFound.role },
       process.env.SECRET_JWT,
       {
-        expiresIn: timeTokenExpire
+        expiresIn: timeTokenExpire,
       }
     );
-      
 
-    return { isSuccess: true, data: {token: tokenRequested, expireIn: timeTokenExpire ,email: userFound.email, name: userFound.name, role: userFound.role }};
+    return {
+      isSuccess: true,
+      data: {
+        token: tokenRequested,
+        expireIn: timeTokenExpire,
+        email: userFound.email,
+        name: userFound.name,
+        role: userFound.role,
+      },
+    };
   }
 }
