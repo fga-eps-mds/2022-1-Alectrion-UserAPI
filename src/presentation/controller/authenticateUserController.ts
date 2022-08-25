@@ -1,5 +1,5 @@
 import { Controller } from "../protocols/controller";
-import { AuthenticateUserUseCase } from "../../useCase/authenticationUser/authenticationUserUseCase";
+import { AuthenticateUserUseCase, LoginUsernameError, LoginPasswordError } from "../../useCase/authenticationUser/authenticationUserUseCase";
 import { badRequest, HttpResponse, ok, serverError } from '../helpers'
 import { BadRequestError } from '../errors'
 import { UpdateUserUseCase } from "../../useCase/updateUser/updateUserUseCase";
@@ -12,7 +12,11 @@ type HttpRequest = {
 type Model =
   | Error
   | { 
-      token: string
+      token: string,
+      expireIn: string,
+      email: string, 
+      name: string,
+      role: string
     }
 
     export class AuthenticationUserController extends Controller {
@@ -26,7 +30,16 @@ type Model =
         if(response.isSuccess && response.data){
           return ok(response.data)
         }
-        return serverError(response.error)
+        else{
+          if (response.error instanceof LoginUsernameError) {
+            return badRequest(new BadRequestError(response.error.message))
+          }
+          else if(response.error instanceof LoginPasswordError){
+            return badRequest(new BadRequestError(response.error.message))
+          }
+          return serverError(response.error)
+        }
       }
 
     }
+
