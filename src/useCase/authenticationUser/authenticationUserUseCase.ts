@@ -3,10 +3,20 @@ import { Repository } from "../../repository/protocol/repository";
 import { Encryptor } from "../../services/encryptor";
 import { Token } from "../../services/tokenGenerator";
 
-export class LoginUserError extends Error {
+export class LoginUsernameError extends Error {
   constructor() {
     super("username nao existente no banco!");
-    this.name = "GetUserError";
+    this.name = "LoginUsernameError";
+  }
+}
+
+
+
+
+export class LoginPasswordError extends Error {
+  constructor() {
+    super("senha incorreta no banco!");
+    this.name = "LoginPasswordError";
   }
 }
 
@@ -45,7 +55,7 @@ export class AuthenticateUserUseCase
     userFound = await this.userRepository.findToAuthenticate(userData.username);
 
     if (!userFound) {
-      return { isSuccess: false, error: new LoginUserError() };
+      return { isSuccess: false, error: new LoginUsernameError() };
     }
     let checkPassword;
 
@@ -55,7 +65,7 @@ export class AuthenticateUserUseCase
     );
 
     if (!checkPassword) {
-      return { isSuccess: false, error: new LoginUserError() };
+      return { isSuccess: false, error: new LoginPasswordError() };
     }
     const timeTokenExpire = "1800s";
     const tokenRequested = this.token.generateToken(
