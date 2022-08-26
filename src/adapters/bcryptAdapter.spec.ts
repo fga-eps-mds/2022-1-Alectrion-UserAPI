@@ -20,12 +20,13 @@ describe('BcryptAdapter', () => {
   })
 
   it('should compare 2 passwords and return a true if it are the same', () => {
-    const passwordLogin = "1234";
+    const passwordLogin = '1234'
     const passwordDB = sut.encrypt(passwordLogin)
-    sut.compare(passwordLogin,passwordDB )
+    sut.compare(passwordLogin, passwordDB)
     expect(mockedDependencyCompare).toHaveBeenCalledTimes(1)
-    expect(mockedDependencyCompare).toHaveBeenCalledWith(passwordLogin, passwordDB)
-
+    expect(mockedDependencyCompare).toHaveBeenCalledWith(
+      passwordLogin,
+      passwordDB
+    )
   })
-  
 })

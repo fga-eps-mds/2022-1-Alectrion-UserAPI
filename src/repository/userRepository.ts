@@ -4,21 +4,21 @@ import { Role } from '../db/entities/userEnum/role'
 import { Job } from '../db/entities/userEnum/job'
 import { Repository } from './protocol/repository'
 
-
 class UserRepository implements Repository {
   private readonly userRepository
   constructor() {
     this.userRepository = dataSource.getRepository(User)
   }
+
   async findToAuthenticate(userName: string): Promise<User> {
-      const userPassword = await this.userRepository.find({
-        where: {
-          username: userName
-        },
-        select:["password", "email", "name", "id", "role"],
-      })
-        return userPassword[0]
-        }
+    const userPassword = await this.userRepository.find({
+      where: {
+        username: userName
+      },
+      select: ['password', 'email', 'name', 'id', 'role']
+    })
+    return userPassword[0]
+  }
 
   async updateOne(userData: any): Promise<boolean> {
     const updateUserData = Object.assign({}, userData)

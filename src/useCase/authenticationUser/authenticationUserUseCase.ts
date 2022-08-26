@@ -1,38 +1,35 @@
-import { UseCase, UseCaseReponse } from "../protocols/useCase";
-import { Repository } from "../../repository/protocol/repository";
-import { Encryptor } from "../../services/encryptor";
-import { Token } from "../../services/tokenGenerator";
+import { UseCase, UseCaseReponse } from '../protocols/useCase'
+import { Repository } from '../../repository/protocol/repository'
+import { Encryptor } from '../../services/encryptor'
+import { Token } from '../../services/tokenGenerator'
 
 export class LoginUsernameError extends Error {
   constructor() {
-    super("username nao existente no banco!");
-    this.name = "LoginUsernameError";
+    super('username nao existente no banco!')
+    this.name = 'LoginUsernameError'
   }
 }
 
-
-
-
 export class LoginPasswordError extends Error {
   constructor() {
-    super("senha incorreta no banco!");
-    this.name = "LoginPasswordError";
+    super('senha incorreta no banco!')
+    this.name = 'LoginPasswordError'
   }
 }
 
 export interface DataUserLogin {
-  username: string;
-  password: string;
+  username: string
+  password: string
 }
 
 export class AuthenticateUserUseCase
   implements
     UseCase<{
-      token: string;
-      expireIn: string;
-      email: string;
-      name: string;
-      role: string;
+      token: string
+      expireIn: string
+      email: string
+      name: string
+      role: string
     }>
 {
   constructor(
@@ -40,41 +37,39 @@ export class AuthenticateUserUseCase
     private readonly encryptor: Encryptor,
     private readonly token: Token
   ) {}
-  async execute(
-    userData: DataUserLogin
-  ): Promise<
+
+  async execute(userData: DataUserLogin): Promise<
     UseCaseReponse<{
-      token: string;
-      expireIn: string;
-      email: string;
-      name: string;
-      role: string;
+      token: string
+      expireIn: string
+      email: string
+      name: string
+      role: string
     }>
   > {
-    let userFound = null;
-    userFound = await this.userRepository.findToAuthenticate(userData.username);
+    let userFound = null
+    userFound = await this.userRepository.findToAuthenticate(userData.username)
 
     if (!userFound) {
-      return { isSuccess: false, error: new LoginUsernameError() };
+      return { isSuccess: false, error: new LoginUsernameError() }
     }
-    let checkPassword;
 
-    checkPassword = this.encryptor.compare(
+    const checkPassword = this.encryptor.compare(
       userData.password,
       userFound.password
-    );
+    )
 
     if (!checkPassword) {
-      return { isSuccess: false, error: new LoginPasswordError() };
+      return { isSuccess: false, error: new LoginPasswordError() }
     }
-    const timeTokenExpire = "1800s";
+    const timeTokenExpire = process.env.TIME_TOKEN || '3600s'
     const tokenRequested = this.token.generateToken(
       { userId: userFound.id, role: userFound.role },
       process.env.SECRET_JWT,
       {
-        expiresIn: timeTokenExpire,
+        expiresIn: timeTokenExpire
       }
-    );
+    )
 
     return {
       isSuccess: true,
@@ -83,8 +78,8 @@ export class AuthenticateUserUseCase
         expireIn: timeTokenExpire,
         email: userFound.email,
         name: userFound.name,
-        role: userFound.role,
-      },
-    };
+        role: userFound.role
+      }
+    }
   }
 }

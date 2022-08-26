@@ -1,4 +1,3 @@
-import { StringifyOptions } from 'querystring'
 import { Job } from '../../db/entities/userEnum/job'
 import { Role } from '../../db/entities/userEnum/role'
 import { User } from '../../domain/entities/user'
@@ -16,7 +15,6 @@ export interface Repository {
   findOne(userId: string): Promise<any>
   findOneByEmail(email: string): Promise<User | undefined>
   findOneByUsername(username: string): Promise<User | undefined>
-  findAll():Promise<User | undefined>
-  findToAuthenticate(userName: string):Promise<User | undefined | null> 
-
-} 
+  findAll(): Promise<User | undefined>
+  findToAuthenticate(userName: string): Promise<User | undefined | null>
+}

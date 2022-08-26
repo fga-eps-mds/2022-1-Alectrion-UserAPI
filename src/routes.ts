@@ -9,6 +9,6 @@ const routes = Router()
 
 routes.put('/update', adapt(makeUpdateUserController()))
 routes.post('/create', adapt(makeCreateUserController()))
-routes.get('/get',IsUserAuthenticated, adapt(makeGetUserController()))
+routes.get('/get', IsUserAuthenticated, adapt(makeGetUserController()))
 routes.post('/login', adapt(makeAuthenticateUserController()))
 export default routes
