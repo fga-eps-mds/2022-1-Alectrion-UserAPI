@@ -16,7 +16,7 @@ export class User {
   @Column()
   name: string
 
-  @Column()
+  @Column({ nullable: true, unique: true })
   email: string
 
   @Column()
@@ -36,7 +36,7 @@ export class User {
   })
   role: Role
 
-  @Column()
+  @Column({ select: false })
   password: string
 
   @Column({ type: 'timestamptz' })
