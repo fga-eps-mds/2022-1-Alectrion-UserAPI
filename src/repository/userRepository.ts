@@ -74,7 +74,7 @@ class UserRepository implements Repository {
 
     const user = this.userRepository.create({
       name,
-      email,
+      email: email !== '' ? email : undefined,
       password,
       username,
       job: job ?? Job.GENERICO,

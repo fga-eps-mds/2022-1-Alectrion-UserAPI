@@ -15,7 +15,7 @@ export interface CreateUserData {
     | 'COORDENADOR'
     | 'CHEFE_SECAO'
     | 'GENERICO'
-  role: 'ADMIN' | 'GERENTE' | 'BASICO'
+  role: 'ADMIN' | 'GERENTE' | 'BASICO' | 'CONSULTA'
   password: string
 }
 
@@ -44,14 +44,15 @@ export class CreateUserUseCase
   async execute(
     createUserData: CreateUserData
   ): Promise<UseCaseReponse<{ email: string; job: string }>> {
-    const userByEmail = await this.userRepository.findOneByEmail(
-      createUserData.email
-    )
-
-    if (userByEmail !== undefined) {
-      return {
-        isSuccess: false,
-        error: new UserAlreadyExistsError('email já utilizado')
+    if (createUserData.email) {
+      const userByEmail = await this.userRepository.findOneByEmail(
+        createUserData.email
+      )
+      if (userByEmail !== undefined) {
+        return {
+          isSuccess: false,
+          error: new UserAlreadyExistsError('email já utilizado')
+        }
       }
     }
 
