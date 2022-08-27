@@ -2,8 +2,8 @@ import { mock } from 'jest-mock-extended'
 import { Repository } from '../../repository/protocol/repository'
 import {
   UpdateUserUseCase,
-  UpadteUserError,
-  UpadateUserData
+  UpdateUserError,
+  UpdateUserData
 } from './updateUserUseCase'
 import { datatype } from 'faker'
 
@@ -13,7 +13,7 @@ const updateUserUseCase = new UpdateUserUseCase(repositoryMocked)
 describe('Should test use case update user', () => {
   it('Should update use with success', async () => {
     repositoryMocked.updateOne.mockResolvedValue(true)
-    const upadetUserData: UpadateUserData = {
+    const upadetUserData: UpdateUserData = {
       userId: datatype.uuid(),
       name: datatype.string(),
       password: datatype.string()
@@ -30,7 +30,7 @@ describe('Should test use case update user', () => {
 
   it('Should fail when update user.', async () => {
     repositoryMocked.updateOne.mockResolvedValue(false)
-    const upadetUserData: UpadateUserData = {
+    const upadetUserData: UpdateUserData = {
       userId: datatype.uuid(),
       name: datatype.string(),
       password: datatype.string()
@@ -38,7 +38,7 @@ describe('Should test use case update user', () => {
 
     const expectedResponse = {
       isSuccess: false,
-      error: new UpadteUserError()
+      error: new UpdateUserError()
     }
     const updateUserResult = await updateUserUseCase.execute(upadetUserData)
     expect(updateUserResult).toEqual(expectedResponse)
