@@ -17,6 +17,12 @@ class UserRepository implements Repository {
     return true
   }
 
+  async deleteOne(userId: string): Promise<void> {
+    await this.userRepository.delete({
+      id: userId
+    })
+  }
+
   async findOne(userId: string): Promise<any> {
     const user = await this.userRepository.findOneBy({
       id: userId
