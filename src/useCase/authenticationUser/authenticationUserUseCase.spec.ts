@@ -44,12 +44,13 @@ describe('Should teste autentication use case', () => {
       password: datatype.string()
     }
     const response = await authenticateUserUseCase.execute(authenticationInput)
+    const expireIn = process.env.TIME_TOKEN || '3600s'
 
     const useCaseExpectedResponse = {
       isSuccess: true,
       data: {
         token: mockedGenerateToken,
-        expireIn: '1800s',
+        expireIn,
         email: mockedUser.email,
         name: mockedUser.name,
         role: mockedUser.role
