@@ -15,6 +15,9 @@ export interface CreateUserData {
     | 'COORDENADOR'
     | 'CHEFE_SECAO'
     | 'GENERICO'
+    | 'COMISSIONADO'
+    | 'ESTAGIARIO'
+    | 'SUPERINTENDENTE'
   role: 'ADMIN' | 'GERENTE' | 'BASICO' | 'CONSULTA'
   password: string
 }
