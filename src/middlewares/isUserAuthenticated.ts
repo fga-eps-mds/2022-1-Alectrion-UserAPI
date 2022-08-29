@@ -26,13 +26,11 @@ export function IsUserAuthenticated(
   try {
     const { role } = verify(token, secret) as PayLoad
     if (role !== Role.ADMIN) {
-      console.log(role)
 
       return res.status(403).send(new NotAdminError().name)
     }
     return next()
   } catch (error) {
-    console.log(error)
     return res.status(401).end()
   }
 }
