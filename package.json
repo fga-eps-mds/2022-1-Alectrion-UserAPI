@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm run test -- --watch",
     "test:staged": "npm run test -- --findRelatedTests",
-    "test:coverage": "CI=true npm run test -- --coverage",
+    "test:coverage": " npm run test -- --coverage",
     "test:integration": "npm run test -- --config ./jest.integration.config.js"
   },
   "repository": {
@@ -48,6 +48,7 @@
     "eslint-plugin-promise": "^6.0.0",
     "jest": "^27.3.1",
     "jest-mock-extended": "^2.0.7",
+    "jest-sonar": "^0.2.12",
     "prettier": "^2.7.1",
     "prettier-config-standard": "^5.0.0",
     "ts-jest": "^27.0.7",
