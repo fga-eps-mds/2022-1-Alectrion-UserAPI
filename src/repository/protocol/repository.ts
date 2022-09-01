@@ -16,6 +16,6 @@ export interface Repository {
   findOne(userId: string): Promise<User>
   findOneByEmail(email: string): Promise<User | undefined>
   findOneByUsername(username: string): Promise<User | undefined>
-  findAll():Promise<User | undefined>
-
-} 
+  findAll(): Promise<User | undefined>
+  findToAuthenticate(userName: string): Promise<User | undefined | null>
+}
