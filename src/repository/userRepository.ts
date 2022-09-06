@@ -28,14 +28,16 @@ class UserRepository implements Repository {
   }
 
   async deleteOne(userId: string): Promise<void> {
-    await this.userRepository.delete({
-      id: userId
+    await this.userRepository.update(userId, {
+      isDeleted: true,
+      deletedAt: new Date()
     })
   }
 
   async findOne(userId: string): Promise<any> {
     const user = await this.userRepository.findOneBy({
-      id: userId
+      id: userId,
+      isDeleted: false
     })
     if (!user) {
       return null
@@ -45,7 +47,8 @@ class UserRepository implements Repository {
 
   async findOneByEmail(email: string): Promise<any> {
     const user = await this.userRepository.findOneBy({
-      email
+      email,
+      isDeleted: false
     })
     if (!user) {
       return undefined
@@ -54,13 +57,16 @@ class UserRepository implements Repository {
   }
 
   async findAll(): Promise<any> {
-    const users = await this.userRepository.find()
+    const users = await this.userRepository.find({
+      where: { isDeleted: false }
+    })
     return users
   }
 
   async findOneByUsername(username: string): Promise<any> {
     const user = await this.userRepository.findOneBy({
-      username
+      username,
+      isDeleted: false
     })
     if (!user) {
       return undefined
