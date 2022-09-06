@@ -19,5 +19,15 @@ module.exports = {
 
   transform: {
     '.+\\.ts': 'ts-jest'
-  }
+  },
+  reporters: [
+    'default',
+    [
+      'jest-sonar',
+      {
+        outputDirectory: 'report',
+        outputName: 'sonar-report.xml'
+      }
+    ]
+  ]
 }

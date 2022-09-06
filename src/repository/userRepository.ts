@@ -10,6 +10,16 @@ class UserRepository implements Repository {
     this.userRepository = dataSource.getRepository(User)
   }
 
+  async findToAuthenticate(userName: string): Promise<User> {
+    const userPassword = await this.userRepository.find({
+      where: {
+        username: userName
+      },
+      select: ['password', 'email', 'name', 'id', 'role']
+    })
+    return userPassword[0]
+  }
+
   async updateOne(userData: any): Promise<boolean> {
     const updateUserData = Object.assign({}, userData)
     delete updateUserData.userId
@@ -75,4 +85,5 @@ class UserRepository implements Repository {
     return user
   }
 }
+
 export default UserRepository
