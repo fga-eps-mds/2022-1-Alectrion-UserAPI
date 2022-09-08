@@ -6,9 +6,11 @@ import {
   UpdateUserData
 } from './updateUserUseCase'
 import { datatype } from 'faker'
+import { Encryptor } from '../../services/encryptor'
 
 const repositoryMocked = mock<Repository>()
-const updateUserUseCase = new UpdateUserUseCase(repositoryMocked)
+const encryptorMock = mock<Encryptor>()
+const updateUserUseCase = new UpdateUserUseCase(repositoryMocked, encryptorMock)
 
 describe('Should test use case update user', () => {
   it('Should update use with success', async () => {
