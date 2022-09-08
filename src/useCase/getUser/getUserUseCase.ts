@@ -24,11 +24,11 @@ export class GetUserUseCase implements UseCase<{ user: User }> {
   ): Promise<UseCaseReponse<{ user: User }>> {
     let userFound = null
 
-    if (userData.userName!) {
+    if (userData.userName) {
       userFound = await this.userRepository.findOneByUsername(userData.userName)
-    } else if (userData.email!) {
+    } else if (userData.email) {
       userFound = await this.userRepository.findOneByEmail(userData.email)
-    } else if (userData.userId!) {
+    } else if (userData.userId) {
       userFound = await this.userRepository.findOne(userData.userId)
     } else if (userData.allUsers) {
       userFound = await this.userRepository.findAll()
@@ -38,6 +38,12 @@ export class GetUserUseCase implements UseCase<{ user: User }> {
         error: new GetUserError()
       }
     }
-    return { isSuccess: true, data: userFound }
+    if (userFound !== undefined) {
+      return { isSuccess: true, data: { user: userFound } }
+    }
+    return {
+      isSuccess: false,
+      error: new GetUserError()
+    }
   }
 }
