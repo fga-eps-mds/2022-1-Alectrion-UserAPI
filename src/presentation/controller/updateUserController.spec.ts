@@ -1,6 +1,6 @@
 import { mock } from 'jest-mock-extended'
 import {
-  UpadteUserError,
+  UpdateUserError,
   UpdateUserUseCase
 } from '../../useCase/updateUser/updateUserUseCase'
 import { UpdateUserControler } from './updateUserController'
@@ -42,7 +42,7 @@ describe('Should test update user controller', () => {
   it('Should return bad request when fail update', async () => {
     const useCaseReponseMock = {
       isSuccess: false,
-      error: new UpadteUserError()
+      error: new UpdateUserError()
     }
     upadateUserUseCaseMocked.execute.mockResolvedValue(useCaseReponseMock)
 

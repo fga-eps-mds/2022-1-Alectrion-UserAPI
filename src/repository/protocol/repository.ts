@@ -12,7 +12,8 @@ export interface Repository {
     password: string
   }): Promise<User | undefined>
   updateOne(userData: any): Promise<boolean>
-  findOne(userId: string): Promise<any>
+  deleteOne(userId: string): Promise<void>
+  findOne(userId: string): Promise<User>
   findOneByEmail(email: string): Promise<User | undefined>
   findOneByUsername(username: string): Promise<User | undefined>
   findAll(): Promise<User | undefined>
