@@ -38,7 +38,7 @@ export class GetUserUseCase implements UseCase<{ user: User }> {
         error: new GetUserError()
       }
     }
-    if (userFound !== undefined) {
+    if (userFound) {
       return { isSuccess: true, data: { user: userFound } }
     }
     return {
