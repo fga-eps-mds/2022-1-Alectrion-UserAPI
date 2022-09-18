@@ -12,11 +12,7 @@ type HttpRequest = {
   email?: string
   userId?: string
 }
-type Model =
-  | Error
-  | {
-      user: User
-    }
+type Model = Error | User[]
 
 export class GetUserController extends Controller {
   constructor(private readonly getUserUseCase: GetUserUseCase) {

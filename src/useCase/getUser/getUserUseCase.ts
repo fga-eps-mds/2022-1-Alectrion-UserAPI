@@ -17,11 +17,9 @@ export interface FindUserInput {
 }
 export interface Users {}
 
-export class GetUserUseCase implements UseCase<{ user: User }> {
+export class GetUserUseCase implements UseCase<User[]> {
   constructor(private readonly userRepository: Repository) {}
-  async execute(
-    userData: FindUserInput
-  ): Promise<UseCaseReponse<{ user: User }>> {
+  async execute(userData: FindUserInput): Promise<UseCaseReponse<User[]>> {
     let userFound = null
 
     if (userData.userName) {
@@ -39,7 +37,10 @@ export class GetUserUseCase implements UseCase<{ user: User }> {
       }
     }
     if (userFound) {
-      return { isSuccess: true, data: { user: userFound } }
+      const returnedValue = (
+        userFound instanceof Array ? userFound : [userFound]
+      ) as User[]
+      return { isSuccess: true, data: returnedValue }
     }
     return {
       isSuccess: false,
