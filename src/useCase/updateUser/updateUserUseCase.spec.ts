@@ -34,8 +34,7 @@ describe('Should test use case update user', () => {
     repositoryMocked.updateOne.mockResolvedValue(false)
     const upadetUserData: UpdateUserData = {
       userId: datatype.uuid(),
-      name: datatype.string(),
-      password: datatype.string()
+      name: datatype.string()
     }
 
     const expectedResponse = {

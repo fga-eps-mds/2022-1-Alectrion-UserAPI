@@ -2,7 +2,7 @@ import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
 
 export interface DeleteUserData {
-  userId: string
+  userId?: string
 }
 
 export class DeleteUserError extends Error {
@@ -25,22 +25,35 @@ export class DeleteUserUseCase implements UseCase<{ message: string }> {
   async execute(
     user: DeleteUserData
   ): Promise<UseCaseReponse<{ message: string }>> {
-    const id = user.userId
-    const userExists = await this.userRepository.findOne(id)
+    try {
+      const id = user.userId
+      if (!id) {
+        return {
+          isSuccess: false,
+          error: new UserNotFoundError()
+        }
+      }
+      const userExists = await this.userRepository.findOne(id)
 
-    if (!userExists) {
+      if (!userExists) {
+        return {
+          isSuccess: false,
+          error: new UserNotFoundError()
+        }
+      }
+
+      await this.userRepository.deleteOne(id)
+
+      return {
+        isSuccess: true,
+        data: {
+          message: 'Usuário deletado com sucesso'
+        }
+      }
+    } catch (error) {
       return {
         isSuccess: false,
-        error: new UserNotFoundError()
-      }
-    }
-
-    await this.userRepository.deleteOne(id)
-
-    return {
-      isSuccess: true,
-      data: {
-        message: 'Usuário deletado com sucesso'
+        error: new DeleteUserError()
       }
     }
   }

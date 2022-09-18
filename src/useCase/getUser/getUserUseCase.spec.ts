@@ -36,7 +36,7 @@ describe('Should test user use case to get user', () => {
     }
     repositoryMocked.findOneByUsername.mockResolvedValue(mockedUser)
     const result = await getUserUseCase.execute(mockedData)
-    expect(result).toEqual({ isSuccess: true, data: mockedUser })
+    expect(result).toEqual({ isSuccess: true, data: { user: mockedUser } })
   })
 
   it('should return an use with success when search by a email', async () => {
@@ -45,7 +45,7 @@ describe('Should test user use case to get user', () => {
     }
     repositoryMocked.findOneByEmail.mockResolvedValue(mockedUser)
     const result = await getUserUseCase.execute(mockedData)
-    expect(result).toEqual({ isSuccess: true, data: mockedUser })
+    expect(result).toEqual({ isSuccess: true, data: { user: mockedUser } })
   })
   it('should return an use with success when search by a userId', async () => {
     const mockedData = {
@@ -53,7 +53,7 @@ describe('Should test user use case to get user', () => {
     }
     repositoryMocked.findOne.mockResolvedValue(mockedUser)
     const result = await getUserUseCase.execute(mockedData)
-    expect(result).toEqual({ isSuccess: true, data: mockedUser })
+    expect(result).toEqual({ isSuccess: true, data: { user: mockedUser } })
   })
   it('should return an error when params are incorrect', async () => {
     const mockedData = {}
