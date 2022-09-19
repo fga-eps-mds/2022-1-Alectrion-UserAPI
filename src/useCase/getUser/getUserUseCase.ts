@@ -17,18 +17,16 @@ export interface FindUserInput {
 }
 export interface Users {}
 
-export class GetUserUseCase implements UseCase<{ user: User }> {
+export class GetUserUseCase implements UseCase<User[]> {
   constructor(private readonly userRepository: Repository) {}
-  async execute(
-    userData: FindUserInput
-  ): Promise<UseCaseReponse<{ user: User }>> {
+  async execute(userData: FindUserInput): Promise<UseCaseReponse<User[]>> {
     let userFound = null
 
-    if (userData.userName!) {
+    if (userData.userName) {
       userFound = await this.userRepository.findOneByUsername(userData.userName)
-    } else if (userData.email!) {
+    } else if (userData.email) {
       userFound = await this.userRepository.findOneByEmail(userData.email)
-    } else if (userData.userId!) {
+    } else if (userData.userId) {
       userFound = await this.userRepository.findOne(userData.userId)
     } else if (userData.allUsers) {
       userFound = await this.userRepository.findAll()
@@ -38,6 +36,15 @@ export class GetUserUseCase implements UseCase<{ user: User }> {
         error: new GetUserError()
       }
     }
-    return { isSuccess: true, data: userFound }
+    if (userFound) {
+      const returnedValue = (
+        userFound instanceof Array ? userFound : [userFound]
+      ) as User[]
+      return { isSuccess: true, data: returnedValue }
+    }
+    return {
+      isSuccess: false,
+      error: new GetUserError()
+    }
   }
 }

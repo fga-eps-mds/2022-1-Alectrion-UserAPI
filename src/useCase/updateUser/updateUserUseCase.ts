@@ -1,7 +1,8 @@
 import { UseCase, UseCaseReponse } from '../protocols/useCase'
 import { Repository } from '../../repository/protocol/repository'
+import { Encryptor } from '../../services/encryptor'
 
-export interface UpadateUserData {
+export interface UpdateUserData {
   userId: string
   name?: string
   email?: string
@@ -10,24 +11,44 @@ export interface UpadateUserData {
   password?: string
 }
 
-export class UpadteUserError extends Error {
+export class UpdateUserError extends Error {
   constructor() {
     super('Não foi possivel atualizar o usuário.')
-    this.name = 'UpadteUserError'
+    this.name = 'UpdateUserError'
   }
 }
 
 export class UpdateUserUseCase implements UseCase<{ message: string }> {
-  constructor(private readonly userRepository: Repository) {}
+  constructor(
+    private readonly userRepository: Repository,
+    private readonly encryptor: Encryptor
+  ) {}
 
   async execute(
-    userUpadate: UpadateUserData
+    userUpdate: UpdateUserData
   ): Promise<UseCaseReponse<{ message: string }>> {
-    return (await this.userRepository.updateOne(userUpadate))
-      ? { isSuccess: true, data: { message: 'Usuário atualizado!' } }
-      : {
-          isSuccess: false,
-          error: new UpadteUserError()
-        }
+    const { userId, name, email, jobFunction, username } = userUpdate
+
+    if (userUpdate.password !== undefined) {
+      const hashedPassword = this.encryptor.encrypt(userUpdate.password)
+      await this.userRepository.updateOne({
+        ...userUpdate,
+        password: hashedPassword
+      })
+      return { isSuccess: true, data: { message: 'Usuário atualizado!' } }
+    } else {
+      return (await this.userRepository.updateOne({
+        userId,
+        name,
+        email,
+        jobFunction,
+        username
+      }))
+        ? { isSuccess: true, data: { message: 'Usuário atualizado!' } }
+        : {
+            isSuccess: false,
+            error: new UpdateUserError()
+          }
+    }
   }
 }

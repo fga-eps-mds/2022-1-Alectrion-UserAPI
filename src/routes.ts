@@ -5,10 +5,12 @@ import { makeUpdateUserController } from './factories/controllers/updateUser'
 import { makeGetUserController } from './factories/controllers/getUser'
 import { makeAuthenticateUserController } from './factories/controllers/authenticateUser'
 import { IsUserAuthenticated } from './middlewares/isUserAuthenticated'
+import { makeDeleteUserController } from './factories/controllers/deleteUser'
 const routes = Router()
 
 routes.put('/update', adapt(makeUpdateUserController()))
 routes.post('/create', adapt(makeCreateUserController()))
 routes.get('/get', IsUserAuthenticated, adapt(makeGetUserController()))
 routes.post('/login', adapt(makeAuthenticateUserController()))
+routes.delete('/delete', adapt(makeDeleteUserController()))
 export default routes

@@ -14,7 +14,7 @@
     "test": "jest --passWithNoTests --no-cache --runInBand",
     "test:watch": "npm run test -- --watch",
     "test:staged": "npm run test -- --findRelatedTests",
-    "test:coverage": "CI=true npm run test -- --coverage",
+    "test:all": "CI=true npm run test -- --coverage",
     "test:integration": "npm run test -- --config ./jest.integration.config.js"
   },
   "repository": {

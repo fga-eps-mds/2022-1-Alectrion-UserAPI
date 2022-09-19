@@ -1,7 +1,7 @@
 import { Controller } from '../protocols/controller'
 import {
-  UpadateUserData,
-  UpadteUserError,
+  UpdateUserData,
+  UpdateUserError,
   UpdateUserUseCase
 } from '../../useCase/updateUser/updateUserUseCase'
 import { badRequest, HttpResponse, ok, serverError } from '../helpers'
@@ -18,14 +18,14 @@ export class UpdateUserControler extends Controller {
     super()
   }
 
-  async perform(httpRequest: UpadateUserData): Promise<HttpResponse<Model>> {
+  async perform(httpRequest: UpdateUserData): Promise<HttpResponse<Model>> {
     const user = httpRequest
     const response = await this.updateUserUseCase.execute(user)
 
     if (response.isSuccess && response.data) {
       return ok(response.data)
     } else {
-      if (response.error instanceof UpadteUserError) {
+      if (response.error instanceof UpdateUserError) {
         return badRequest(new BadRequestError(response.error.message))
       } else return serverError(response.error)
     }

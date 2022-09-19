@@ -46,4 +46,13 @@ export class User {
   @Column({ type: 'timestamptz' })
   @UpdateDateColumn()
   updatedAt: Date
+
+  @Column({ nullable: true })
+  deletedAt?: Date
+
+  @Column({
+    type: 'boolean',
+    default: false
+  })
+  isDeleted?: boolean
 }
