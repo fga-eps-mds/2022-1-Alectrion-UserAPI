@@ -6,6 +6,22 @@
 
 Alectrion é um sistema de controle e gerenciamento de inventário e ordens de serviços de TI.
 
+## Requisitos
+
+ - Docker
+ - Docker-compose
+
+## Instalação
+
+1. Clone o projeto 
+> git clone https://github.com/fga-eps-mds/2022-1-Alectrion-UserAPI
+2. Entre na pasta do projeto
+> cd 2022-1-Alectrion-UserAPI
+3. execute o projeto
+> docker-compose up
+
+A aplicação sera iniciada na porta 4001
+
 ## Contribuir
 Para contribuir com esse projeto é importante seguir nosso [Guia de Contribuição](docs\documentation\Documentos\guia-contribuicao.md) do repositório e seguir nossa [Política de Branches](docs\documentation\Documentos\politicas-branch.md).
 
