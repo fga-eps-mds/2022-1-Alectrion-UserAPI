@@ -6,6 +6,8 @@
 
 Alectrion é um sistema de controle e gerenciamento de inventário e ordens de serviços de TI.
 
+Aplicação disponível em: [link da aplicação](https://alectrion-front.herokuapp.com/)
+
 ## Requisitos
 
  - Docker
