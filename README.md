@@ -15,14 +15,21 @@ Aplicação disponível em: [link da aplicação](https://alectrion-front.heroku
 
 ## Instalação
 
-1. Clone o projeto 
-> git clone https://github.com/fga-eps-mds/2022-1-Alectrion-UserAPI
-2. Entre na pasta do projeto
-> cd 2022-1-Alectrion-UserAPI
-3. execute o projeto
-> docker-compose up
+1. Clone o projeto
+    
+    > git clone https://github.com/fga-eps-mds/2022-1-Alectrion-UserAPI
 
-A aplicação sera iniciada na porta 4001
+2. Entre na pasta do projeto
+    
+    > cd 2022-1-Alectrion-UserAPI
+
+3. Crie o arquivo .env e db.env utilizando como base os arquivo de exemplo(.env.example e o db.env.example).
+
+4. Execute o projeto
+    
+    > docker-compose up
+
+A aplicação será iniciada na porta 4001
 
 ## Contribuir
 Para contribuir com esse projeto é importante seguir nosso [Guia de Contribuição](docs\documentation\Documentos\guia-contribuicao.md) do repositório e seguir nossa [Política de Branches](docs\documentation\Documentos\politicas-branch.md).
