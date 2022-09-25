@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data:/var/lib/postgresql/data
     ports:
-      - '5432:5432'
+      - '5433:5432'
 
   user_api:
     depends_on:
@@ -20,5 +20,5 @@ services:
       - ./:/app
     ports:
       - 4001:4001
-    command: bash -c "yarn && yarn migration:run && yarn dev"
+    command: bash -c "yarn && yarn dev"
 
