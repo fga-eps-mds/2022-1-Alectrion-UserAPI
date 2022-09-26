@@ -29,7 +29,7 @@ Aplicação disponível em: [link da aplicação](https://alectrion-front.heroku
     
     > docker-compose up
 
-A aplicação será iniciada na porta 4001
+A aplicação será iniciada na porta 4001, poderá acessar a aplicação com o usuário: admin e senha: admin1234
 
 OBS: Caso for necessario a conexão uma conexão que utilize o SSL, descomentar a linha 7: ```ssl: { rejectUnauthorized: false },``` do arquivo src/db/config.ts
 ## Contribuir
