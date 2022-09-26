@@ -4,7 +4,7 @@ import { Job } from '../../db/entities/userEnum/job'
 import { Role } from '../../db/entities/userEnum/role'
 
 export type User = {
-  id: string
+  id?: string
 
   name: string
 
@@ -18,9 +18,9 @@ export type User = {
 
   password: string
 
-  createdAt: Date
+  createdAt?: Date
 
-  updatedAt: Date
+  updatedAt?: Date
 
   deletedAt?: Date
 

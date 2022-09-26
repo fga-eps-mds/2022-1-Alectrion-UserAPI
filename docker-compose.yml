@@ -20,5 +20,5 @@ services:
       - ./:/app
     ports:
       - 4001:4001
-    command: bash -c "yarn && yarn dev"
+    command: bash -c "yarn && yarn migration:run && yarn dev"
 

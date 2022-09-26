@@ -5,8 +5,9 @@
   "main": "index.js",
   "scripts": {
     "clean": "rimraf dist",
-    "build": "npm run clean && tsc -p tsconfig.json --max_old_space_size=1024",
+    "build": "npm run clean && tsc -p tsconfig.json",
     "typeorm": "ts-node-dev node_modules/.bin/typeorm",
+    "db:seed": "ts-node-dev node_modules/typeorm-seeding/dist/cli.js seed",
     "migration:generate": "npm run typeorm -- migration:generate src/db/migrations/default -d src/db/config.ts",
     "migration:run": "npm run typeorm -- migration:run -d src/db/config.ts",
     "migration:revert": "npm run typeorm -- migration:revert -d src/db/config.ts",

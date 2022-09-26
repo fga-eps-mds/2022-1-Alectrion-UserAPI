@@ -11,7 +11,7 @@ import { Role } from './userEnum/role'
 @Entity()
 export class User {
   @PrimaryGeneratedColumn('uuid')
-  id: string
+  id?: string
 
   @Column()
   name: string
@@ -41,11 +41,11 @@ export class User {
 
   @Column({ type: 'timestamptz' })
   @CreateDateColumn()
-  createdAt: Date
+  createdAt?: Date
 
   @Column({ type: 'timestamptz' })
   @UpdateDateColumn()
-  updatedAt: Date
+  updatedAt?: Date
 
   @Column({ nullable: true })
   deletedAt?: Date

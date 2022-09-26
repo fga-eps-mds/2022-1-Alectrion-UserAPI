@@ -9,8 +9,8 @@ import { makeDeleteUserController } from './factories/controllers/deleteUser'
 const routes = Router()
 
 routes.put('/update', adapt(makeUpdateUserController()))
-routes.post('/create', adapt(makeCreateUserController()))
+routes.post('/create', IsUserAuthenticated, adapt(makeCreateUserController()))
 routes.get('/get', IsUserAuthenticated, adapt(makeGetUserController()))
 routes.post('/login', adapt(makeAuthenticateUserController()))
-routes.delete('/delete', adapt(makeDeleteUserController()))
+routes.delete('/delete', IsUserAuthenticated, adapt(makeDeleteUserController()))
 export default routes

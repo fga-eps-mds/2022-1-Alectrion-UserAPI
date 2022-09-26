@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { verify } from 'jsonwebtoken'
 import { Role } from '../db/entities/userEnum/role'
+
 export class NotAdminError extends Error {
   constructor() {
     super('Só pode ser acessado por um ADMIN!')
@@ -13,6 +14,7 @@ interface PayLoad {
   role: string
 }
 const secret = process.env.SECRET_JWT || ''
+
 export function IsUserAuthenticated(
   req: Request,
   res: Response,
