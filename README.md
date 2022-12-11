@@ -32,7 +32,7 @@ Aplicação disponível em: TO-DO
 
 A aplicação será iniciada na porta 4001. Utilize como usuário: ```admin``` e senha: ```admin1234```
 
-OBS: Caso for necessario a conexão uma conexão que utilize o SSL, descomentar a linha 7: ```ssl: { rejectUnauthorized: false },``` do arquivo ```src/db/config.ts```
+OBS: Caso for necessário a conexão uma conexão que utilize o SSL, descomentar a linha 7: ```ssl: { rejectUnauthorized: false },``` do arquivo ```src/db/config.ts```
 
 ## Contribuir
 Para contribuir com esse projeto é importante seguir nosso [Guia de Contribuição](https://fga-eps-mds.github.io/2022-2-Alectrion-DOC/#/./Documentos/guia-contribuicao.md) do repositório e seguir nossa [Política de Branches](https://fga-eps-mds.github.io/2022-2-Alectrion-DOC/#/./Documentos/Documentos/politicas-branch.md).
