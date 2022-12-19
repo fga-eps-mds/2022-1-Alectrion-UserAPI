@@ -55,4 +55,10 @@ export class User {
     default: false
   })
   isDeleted?: boolean
+
+  @Column({
+    type: 'boolean',
+    default: true
+  })
+  firstLogin: boolean
 }
