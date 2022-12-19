@@ -25,4 +25,6 @@ export type User = {
   deletedAt?: Date
 
   isDeleted?: boolean
+
+  firstLogin: boolean
 }
